@@ -3,6 +3,7 @@
 #include <time.h>
 int is_input_int(char data[20])
 {
+	//function to check if an input is an integer
 	for (int i = 0; data[i] != '\0'; i++)
 	{
 		if (data[i] >= '0' && data[i] <= '9')
@@ -15,6 +16,7 @@ int is_input_int(char data[20])
 }
 int string_to_int(char data[20])
 {
+	//function which turns a c-string of ascii into integers, specifically  from 0-9
 	int number = 0;
 	for (int i = 0; data[i] != '\0'; i++)
 	{
@@ -25,14 +27,17 @@ int string_to_int(char data[20])
 }
 int dice_roller(int die_type)
 {
+	//variable dice roller
 	return ((rand() % (die_type)) + 1); 
 }
 int ab_mod(int ability_score)
 {
+	//calculates an ability modifier
 	return ((ability_score - 10 )/2);
 }
 enum Ras
 {
+	//list of races
 	_HUMAN, 
 	_ELF,
 	_DWARF,
@@ -41,6 +46,7 @@ enum Ras
 };
 enum Ability_Score_id
 {
+	//list of ability scores
 	STRENGTH,
 	DEXTERITY,
 	CONSTITUTION,
@@ -50,6 +56,7 @@ enum Ability_Score_id
 };
 enum KLASS
 {
+	//list of classes
 	_BARBARIAN,
 	_BARD,
 	_MONK,
@@ -58,18 +65,21 @@ enum KLASS
 };
 struct Race
 {
+	//structure of what details a race has
 	int r_id;
 	int r_mod[6];
 	char r_name[15];
 };
 struct Klass
 {
+	//structure of what details a class has
 	int k_id;
 	int k_hit_die[2];
 	char k_name[15];
 };
 struct Race get_race(int id)
 {
+	//compiles race type with stat bonuses and written name
 	struct Race races[5] = {
 
 		{ _HUMAN,{ 1, 1, 1, 1, 1, 1 }, "Human" },
@@ -82,6 +92,7 @@ struct Race get_race(int id)
 };
 struct Klass get_klass(int id)
 {
+	//compiles class type with stat bonuses and written name
 	struct Klass klasses[5] = {
 
 		{ _BARBARIAN,{ 1, 12 }, "Barbarian" },
@@ -94,6 +105,7 @@ struct Klass get_klass(int id)
 }
 struct Stats
 {	
+	//structure for the various character statistics
 	int id;
 	int strength;
 	int dexterity;
@@ -107,6 +119,7 @@ struct Stats
 };
 struct Stats stat_roller(int id)
 {
+	//dice roller for the ability scores
 	struct Stats temp;
 	temp.id = id;
 	temp.strength = (rand() % 12) + 6;
@@ -120,11 +133,13 @@ struct Stats stat_roller(int id)
 }
 void stat_block(struct Stats entity)
 {
+	//prints the rolled stats
 	printf("Constitution : %6d \nDexterity  : %8d \nStrength  : %9d\nIntelligence  : %5d\nWisdom  : %11d\nCharisma  : %9d\n", entity.constitution, entity.dexterity, entity.strength, entity.intelligence, entity.wisdom, entity.charisma);
 }
 int main(void)
 {
 	srand((unsigned int)time(0));
+
 	int vald_ras;
 	int input;
 	int hp;
@@ -163,6 +178,7 @@ int main(void)
 		
 	stat_block(character);
 
+	//calculates hp after chosen race and constitution modifier
 	hp = (dice_roller(chosen_class.k_hit_die[1]) + ab_mod(character.constitution));
 	printf("Your HP, after rolling, is: %d", hp);
 
